@@ -145,6 +145,7 @@ Abstract last ...
  	To help identify subtle pattern repetition in the MOSES difference images we cross-correlated them along the dispersion direction, or image rows.  The cross-correlation of two difference images is defined to be,
 	 	\begin{equation}
 		 	PZ \otimes MZ = \mathcal{F}^{-1} \left\{\mathcal{F}\left(PZ \right)*\mathcal{F}\left(MZ \right)  \right\},
+		 	\label{eqn:cross_correlate}
 	 	\end{equation}
  	where $PZ$ and $MZ$ are the m = 0 order subtracted from the m = 1 order and the m = 0 order subtracted from the m = -1 order respectively. $\mathcal{F}$ is the Fast Fourier Transform (FFT) operator.  The MOSES image rows were also Hanning windowed prior to applying the FFT to minimize edge effects.  The discrete Hanning window, $w(k)$, implemented was,
  	
@@ -196,28 +197,35 @@ Abstract last ...
 	\begin{equation}
 		\Phi(n) = 2\pi * randomu(n),
 	\end{equation}
-	the function $randomu()$ picks a random value from a uniform distribution between zero and one each time it is called, and $floor()$ rounds down to the nearest integer.  The function $\sigma()$ generates an random integer between zero and $L-1$.  
+	the function $randomu()$ picks a random value from a uniform distribution between zero and one each time it is called, and $floor()$ rounds down to the nearest integer.  The function $\sigma()$ generates a random integer between zero and $L-1$.  
 	
-	In order create an array that is 2048 elements long from one that is 1024 elements long we require twice as many value of $k$.  We solve this problem by double picking values from the distribution for each wave number, $k$.  The values of $k$ used in Equation \ref{eqn:synth_array} are
+	In order create an array that is 2048 elements long from one that is 1024 elements long we require twice as many value of $k$.  We solve this problem by double picking values from the distribution for each wave number, $k$.  The values of $k$ used in Equation \ref{eqn:synth_array} are,
 	
 	\begin{equation}
 		k_j = floor(j/2),
 	\end{equation}
-	for $j = 1,2,..,1022.$ Since our data is purely real we can fill in the remaining Fourier components, negative frequencies, with the complex conjugate of the corresponding positive frequencie components after they are selected from the distribution.
-	\begin{equation}
-		\widetilde{Z}_{-k}^{'} = \widetilde{Z}_{k}^{'*}
-	\end{equation}
-	
-	The final synthetic MOSES row, 
+	where $j = 1,2,..,1022.$ Since our data is purely real we can fill in the remaining Fourier components,  negative frequencies, with the complex conjugate of the corresponding positive frequency component.  The final synthetic MOSES row is found through a FFT, 
 	
 	\begin{equation}
-		Z^{'} = \mathcal{F}_y^{-1}[\widetilde{Z}^{'}],
+		Z^{'} = \mathcal{F}_y^{-1}[\widetilde{Z}^{'}].
 	\end{equation}
-	is 2048 elements long.  After generating a large number of synthetic arrays we can compare their distribution of autocorrelation and power spectra to that of the MOSES image rows.
+
+	To verify that our N synthetic arrays match the MOSES columns we take a 1024 element long section of each synthetic array, as well as the MOSES columns, and plot portions the power spectral and autocorrelation distributions. Figures \ref{fig:sigtestpower} and \ref{fig:sigtestauto}  show three percentiles of the distribution (10th, 50th, and 90th) for both power spectra and autocorrelation for N equal to 10,000 synthetic arrays. Figure \ref{fig:sigtestpower} shows great agreement between synthetic data and the MOSES columns in power spectral distribution.  Figure \ref{fig:sigtestauto} show good agreement between the synthetic data and MOSES columns at the median and only marginal agreement in the wings of the distribution.  Despite that the synthetic data always has a high autocorrelation length that the MOSES columns and therefore acts as a worse case scenario during significance testing.  
+		
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{images/sigtestpower}
+		\caption{The 10th, 50th, and 90th percentile of the power spectral distribution for each value of k is plotted for both the MOSES columns and synthetic data.}
+		\label{fig:sigtestpower}
+	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{images/sigtestauto}
+		\caption{The 10th, 50th, and 90th percentile of the autocorrelation distribution for each value of k is plotted for both the MOSES columns and synthetic data.}
+		\label{fig:sigtestauto}
+	\end{figure}
 	
-	
-	
-	For the purposes of significance testing we generated 10,000 sets of three arrays, one array for each order.
+	Figure \ref{fig:sigtest} shows the results of our significance testing with 10,000 synthetic arrays.  Each set of three arrays, $Z^{'}$, $M^{'}$, $P^{'}$, are subtracted and correlated according to Equation \ref{eqn:cross_correlate}. We find that the mean cross-correlation of MOSES difference images along their rows has peaks that are much greater than the 99.99\% confidence interval and are therefore significant and indicative of extra spectral content.
 	
 	
 	

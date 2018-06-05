@@ -2,4 +2,7 @@
 *.out*
 *.log*
 *.dvi*
+*.blg*
+*.bbl*
+*.synctes.gz*
 

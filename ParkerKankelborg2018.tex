@@ -171,6 +171,7 @@ Abstract last ...
  
 	
 	\subsection{Significance Testing}
+	\label{sec:sigtesting}
 	The mean cross-correlation function of the two MOSES difference images, $PZ$ and $MZ$, has several peaks at nonzero lags.  We propose that these peaks in cross-correlation are due to shifted solar features in the MOSES outboard orders and are therefore significant in identifying extra spectral content.  To test this hypothesis we cross correlated randomly generated synthetic solar data that matched MOSES image rows in length and had similar power spectral and autocorrelation distributions.  Our test data set was generated from the MOSES image columns because they contain the same solar features as the image rows, but contain practically no spectral dispersion.  By interpolating and shuffling the elements of the MOSES columns in Fourier space we can generate a large number of test arrays for significance testing.
 	
 	MOSES images contain 2048 columns.  These columns have the same spatial features as MOSES image rows but with none of the spectral information.  Despite this the MOSES image columns are insufficient for significance testing in a couple ways.  First, there is an insufficient sample size.  With features in the MOSES images ranging from four to about a hundred pixels we have at most 512 unique columns for significance testing.  Second, they are half as long as the rows preventing us from measuring significance past 1024 pixel lag.  Therefore we needed to generate a synthetic data set for significance testing.
@@ -225,15 +226,17 @@ Abstract last ...
 		\label{fig:sigtestauto}
 	\end{figure}
 	
-	Figure \ref{fig:sigtest} shows the results of our significance testing with 10,000 synthetic arrays.  Each set of three arrays, $Z^{'}$, $M^{'}$, $P^{'}$, are subtracted and correlated according to Equation \ref{eqn:cross_correlate}. We find that the mean cross-correlation of MOSES difference images along their rows has peaks that are much greater than the 99.99\% confidence interval and are therefore significant and indicative of extra spectral content.
+	Figure \ref{fig:sigtest} shows the results of our significance testing with 10,000 synthetic arrays.  Each set of three arrays, $Z^{'}$, $M^{'}$ and $P^{'}$, are subtracted and correlated according to Equation \ref{eqn:cross_correlate}. We find that the mean cross-correlation of MOSES difference images along their rows has peaks that are much greater than the 99.99\% confidence interval and are therefore significant and indicative of extra spectral content.
 	
 	
 	
 	
 	
 	\subsection{Forward Model} 
-	Four EIT images selected as close to the viewing time as possible.  \\
-	Peak Formation temperature of Chianti lines is used to select most fitting image.  We should consider whether using weighted combinations of these images was really the right thing to do. Possibly by comparing the results one way or another.
+	The mean cross-correlation of MOSES difference image rows is shown in Figure \ref{fig:sigtest}.  In Section \ref{sec:sigtesting} several peaks in correlation were deemed to be significant and indicative of extra spectral content in the MOSES images.  These peaks have irregular, broad profiles and are both positive and negative.  To interpret how these peaks in correlation relate to spectral content we developed a forward model that produces synthetic MOSES difference images with known spectral content using Chianti \citep{} and images from EIT \citep{}.  
+	
+	During the 2008 MOSES rocket flight EIT captured 4 full disk EUV images, one in each of the 171 {\AA}, 195 {\AA}, 284 {\AA}, and 304 {\AA} channels.  Each image was co-aligned, cropped, and rebinned 
+	
 	\subsection{Fitting}
 	Using a MCMC to thoroughly explore the parameter space and generate error bars on fit parameters. More work to be done here.
 

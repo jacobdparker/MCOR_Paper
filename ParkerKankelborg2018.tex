@@ -9,7 +9,21 @@
 \def\UrlFont{\sf}            % define the fonts for the URLs
 
 \usepackage{natbib}
+\usepackage{acronym}
+
+\usepackage{contour}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage[caption=false]{subfig}
+
+
+
+
+
 \bibliographystyle{spr-mp-sola}
+
+
+
 
 
 %Journal commands from AAStex
@@ -19,6 +33,8 @@
 \newcommand\apjs{\ref@jnl{ApJS}}%    % Astrophysical Journal, Supplement 
 
 \newcommand{\cck}[1]{{\color{red} CCK: #1}} % CCK comment
+
+\newcommand{\jdp}[1]{{\color{blue} JDP: #1}} % JDP comment
 
 
 \begin{document}
@@ -32,8 +48,10 @@
 \address[id=aff1]{Montana State University}
 
 
+
+
 \begin{abstract}
-Abstract last ...
+
 \end{abstract}
 \keywords{Need to look through the list of allowed keywords and pick a couple}
 \end{opening}
@@ -41,41 +59,139 @@ Abstract last ...
 \section{Introduction}
 %Cosie as possible broad scientific context
 
+\subsection{Temporary Outline}	
+	\begin{enumerate}
+		\item Brief discussion of TR and events worth studying
+		\item Cite previous studies the TR and motivate MOSES
+		\item Briefly describe instrument concept but mostly cite previous works on this.
+		\item Possibly cite the scientific success of Skylab overlapograms to prove the utility of this type of data.
+		\item Point to EIS Slot Paper by MSSL folk
+		\item Outline the rest of the paper.
+		
+	\end{enumerate}
+
+	
+
+	
+%	 \cck{I like the idea of setting forth the symptoms first to motivate this study. A figure would help here. [Should we have a section called ``Data,'' that describes these features in detail? The intro could simply allude to them and say that they will be described in \S\,2.]}
+%	 
+%	 \jdp{I think you are right.  It might flow better if I discussed the data, features in the data, and previous work on it in an additional section. Then would the intro be simply broader scientific motivation for MOSES in general? I'll try and outline the intro and data section and we can go from there.}
+%	
+%
+%	
+%\cck{Should acknowledge that the wishbone, the limb brightening, and perhaps some other off-band sources, have been identified and discussed previously by Fox (2011 PhD Thesis) and Rust (2017 PhD Thesis). Summarize what they deduced about these features.}
+%
+%\jdp{Tom's thesis addressed this nicely.  No mention of off band features in either Lewis' thesis or ApJ paper.}
+	
+\section{Data}	
+	
+	The \ac{MOSES} sounding rocket launched from White Sands Missile Range on February 8th, 2006 at 18:44 UT. It recorded 27 exposures between 18:44:17 and 18:49:13 UT above 160 km in altitude.  Exposure times ranged from .25 - 24 seconds with a roughly 6 second readout time in between.  An exposure consists of three images, one for each of the three spectral orders m = -1, 0, and 1.  All data was dark subtracted and co-aligned to exposure number 13 prior to our study \citep{Fox2010,Fox2011,Rust2017}. 
+	
+	Of the different exposures, longer exposures are best for observing quiet sun features but are saturated near active regions.  To fill in missing saturated regions and increase signal to noise we form a single time averaged image in all three spectral orders. Saturated pixels are masked with NaNs (Not a Number) and treated as missing data. Since \ac{MOSES} observes through changing amounts of atmosphere throughout its flight we use the median of each image as a synthetic exposure time, rather than the amount of time the shutter is open. Masked data is then summed in time and divided by a total synthetic exposure time for each pixel to form a single time averaged image in each spectral order with no saturated pixels.  Figures \ref{fig:moses_super}a and \ref{fig:moses_super}b shows the m = 0 and 1 order time averaged images. 
+	
+
+
+	\begin{figure}
+		
+			\begin{tikzpicture}
+				\node[inner sep=0pt] at (0,0)
+				{\includegraphics[trim={0 3cm 0 3cm},clip, width = \linewidth]{super_zero}};
+				\node[] at (-5.7,2.6) {a)};
+			\end{tikzpicture}
+		
+				
+		
+		
+			\begin{tikzpicture}
+				\node[inner sep=0pt] at (0,0) {\includegraphics[trim={0 3cm 0 3cm},clip, width = \linewidth]{super_plus}};
+			\node[] at (-5.7,2.6) {b)};
+			\end{tikzpicture}	
+		
+		
+		
+			
+			\begin{tikzpicture}
+				%contour options for outlining text
+				
+				\contourlength{1pt} %how thick each copy is
+				\contournumber{20}  %number of copies
+				
+				%place figure
+				\node[inner sep=0pt] at (0,0)
+				{\includegraphics[trim={0 3cm 0 3cm},clip, width = \linewidth]{super_pz}};
+				
+				%draw boxes and label
+				\draw[-,green,line width=1mm]  (1.7,2.4)  rectangle (-1,1.3) node[left] {\contour{black}{\large \textcolor{green} 1}};
+				\draw[-,green,line width=1mm] (-4.35,-2.3) rectangle  (-3.7,-1.5)  node[right] {\contour{black}{ \large \textcolor{green} 3}};
+				\draw[-,green,line width=1mm] (4.6,0) rectangle (2,-1) node[left] {\contour{black}{\large \textcolor{green}2}};
+						
+				%add sub figure letter
+				\node[] at (-5.7,2.6) {c)};	
+
+			\end{tikzpicture}	
+		
+
+		
+		\caption{Time averaged images for the m = 0 (a) and 1 (b) spectral orders, followed by their difference (c), m = 1 minus m = 0.  Regions one through three, boxed in green, show regions of high spectral contamination. Dark features from the m = 0 order are adjacent to white smears with pixel shifts too large to be Doppler shifts.}
+		\label{fig:moses_super}
+	\end{figure}
+
+	
+
+	Identifying solar features in the MOSES data that have undergone spectral dispersion is simple. Subtracting the m = 0 image (that contains no spectral dispersion) from either outboard order eliminates non-dispersed features. What remains are bi-polar features of various spatial scales.  A feature in the principle wavelength, He\,{\sc ii} $\lambda 303.8$\AA, with a nonzero line-of-sight (LOS) velocity is translated along image rows.    MOSES has a spectral dispersion of $\approx 30$ km s$^{-1}$ pixel$^{-1}$, leading to a less than ten pixel shift for even the fastest LOS velocities in He\,{\sc ii}. This results in a bi-polar feature with an obvious positive and negative counterpart that are immediately next to one another. Events like these have been studied in detail by several authors \citep{Fox2010,Rust2017,Courrier2018}.
 	
 	
-	Cite successful studies using similar data, including previous MOSES studies. \\ 
+	Features from other emission lines in the MOSES passband have shifts larger than 10 pixels and cannot be mistaken as Doppler shifted features in He\,{\sc ii}  $\lambda303.8$ \AA. A feature in Si\,{\sc xi} $\lambda$303.3\AA , the next closest line, would be shifted by 17 pixels. Si\,{\sc xi} features can be seen on the solar limb where He II has little to no contribution. The best example of this is seen in box 3 of Figure \ref{fig:moses_super}c.  Box 1 of Figure \ref{fig:moses_super}c has a large, coherent, negative feature dubbed the ``wishbone''.  The wishbone is very solar in appearance and has no obvious positive counterpart.  Close inspection reveals a white smear to its left that is likely a shifted wishbone in the plus order.  Unfortunately the positive portion of the wishbone is too blurry to quantify its shift by inspection. A previous study of these features by \citet{Rust2017} used a wavelet transform to isolate large scale features prior to taking the difference.  That procedure allowed \citet{Rust2017} to roughly identify a contribution from Mg\,{\sc vii} $\lambda$315\AA \  to regions 1 and 2 and from Si\,{\sc ix}/ Fe\,{\sc vi} $\lambda$296.1\AA \ to region 3 of Figure \ref{fig:moses_super}c.
+.	
+	\begin{figure}
+		
+			\begin{tikzpicture}
+			\node[inner sep=0pt] at (0,0)
+			{\includegraphics[trim={0 4.7cm 0 3.6cm},clip, width = \linewidth]{eit_171}};
+			\node[] at (-5.7,2.2) {a)};
+			\end{tikzpicture}
+			
+			\begin{tikzpicture}
+			\node[inner sep=0pt] at (0,0) {\includegraphics[trim={0 4.7cm 0 3.5cm},clip, width = \linewidth]{eit_195}};
+			\node[] at (-5.7,2.2) {b)};
+			\end{tikzpicture}	
+		
+			\begin{tikzpicture}
+			\node[inner sep=0pt] at (0,0) {\includegraphics[trim={0 4.7cm 0 3.5cm},clip, width = \linewidth]{eit_284}};
+			\node[] at (-5.7,2.2) {c)};
+			\end{tikzpicture}	
+
+			\begin{tikzpicture}
+			\node[inner sep=0pt] at (0,0) {\includegraphics[trim={0 3cm 0 3.5cm},clip, width = \linewidth]{eit_304}};
+			\node[] at (-5.7,2.6) {d)};
+			\end{tikzpicture}	
+		
+		
+		\caption{SOHO EIT Images taken closest the MOSES Launch.  Each channel has been rebinned to match MOSES angular resolution and co-aligned to the MOSES FOV}
+		\label{fig:EIT}
+	\end{figure}
+
+	In support of the 2008 MOSES rocket flight the \ac{EIT} \citep{EIT} on board SOHO \citep{SOHO} captured 4 full disk EUV images, one in each of the 171 {\AA}, 195 {\AA}, 284 {\AA}, and 304 {\AA} channels \ref{fig:EIT}. Each image was first despiked via \texttt{iris\_prep\_despike.pro} with default settings and made level 1 via \texttt{eit\_prep.pro}. They were then rotated to 2006-02-08 18:47 UT, the timestamp of image 13 of the MOSES observing sequence \citep{Fox2011}, and rebinned to the MOSES angular resolution of 0.59 arcsec per pixel.  Each image was co-aligned to MOSES via the cross correlation of the MOSES m = 0 image and EIT 304\AA \ channel. At first glance one can find several similar feature in the \ac{MOSES} difference image (Figure \ref{fig:moses_super}c) and the \ac{EIT} 171, 195, and 284 images (Figure \ref{fig:EIT}a, \ref{fig:EIT}b, \ref{fig:EIT}c).  The presence of these features in \ac{MOSES} data indicates a contribution of coronal spectral lines to an otherwise transition region image.  
 	
-	Short comings of narrow band EUV imagers.  AIA temperature function for 304 \AA \ image?.  MOSES I throughput curve. \\
+	While similarities between \ac{MOSES} difference images and \ac{EIT} images indicate the contribution of hotter lines to \ac{MOSES} He {\sc ii} data, they do not tell how much, and by which lines.  In Section \ref{sec:methods} we use cross-correlation, and a forward model of the \ac{MOSES} instrument that utilizes the EIT images from Figure \ref{fig:EIT} and Chianti \citep{Chianti} to identify the contamination lines withing the MOSES passpand, and the extent of their contribution to MOSES images.
+	 
 	
-	 \cck{I like the idea of setting forth the symptoms first to motivate this study. A figure would help here. [Should we have a section called ``Data,'' that describes these features in detail? The intro could simply allude to them and say that they will be described in \S\,2.]}
-	
-	Identifying solar features in the MOSES data that have undergone spectral dispersion is simple. Subtracting the central order image (that contains no spectral dispersion) from either outboard order eliminates non-dispersed features. What remains are bi-polar features of various spatial scales.  A feature in the principle wavelength, He {\sc ii} $\lambda 303.8$\AA, with a nonzero line-of-sight (LOS) velocity is translated along image rows.    MOSES has a spectral dispersion of $\approx 30$ km s$^{-1}$ pixel$^{-1}$, leading to a less than ten pixel shift for even the fastest LOS velocities in He {\sc ii}. 
-	%It would be nice to nail just need to dig up some grating specs.%
-	This results in a bi-polar feature with an obvious positive and negative counterpart that are immediately next to one another. A great example of this is the explosive event studied by \citet{Fox2010} which is highlighted in Figure \ref{}.
-	
-	Features from other emission lines in the MOSES passband have shifts larger than 10 pixels and cannot be mistaken as Doppler shifted features in He II $\lambda303.8$ \AA. A feature in Si XI $\lambda$303.3\AA , the next closest line, would be shifted by 17 pixels. Si XI features can be seen on the solar limb where He II has little to no contribution. The active regions observed by MOSES have a complicated structure in the difference images.  The northern of the two active regions shows small bi-polar features with positive and negative lobes immediately next to one another.  It also shows a large curved negative feature with no obvious positive counterpart.  We will refer to this feature as the ``wishbone".  The wishbone has a spatial size of \textbf{find this number exactly}.  Therefore its positive and negative parts should appear next to one another if it is shifted by its size or less.  Since this is not the case we can infer that its wavelength is at least \textbf{so many angstroms} different.  Since the wishbone's positive lobe cannot be identified by eye we turn to cross correlation to identify its spectral content.
-	
-\cck{Should acknowledge that the wishbone, the limb brightening, and perhaps some other off-band sources, have been identified and discussed previously by Fox (2011 PhD Thesis) and Rust (2017 PhD Thesis). Summarize what they deduced about these features.}
-	
+	 \jdp{Question, if I rotate an image to a specific time, do I maintain the original time stamp in Figure \ref{fig:EIT}, do I not display it at all, or do I label it with the new time it has been rotated to?}
+		
 	
 	
 
 \section{Methods}
+\label{sec:methods}
 	\subsection{Temporary Outline}
 		I am having trouble organizing my thoughts for this section.  Lets try this way.
 		\begin{enumerate}
 			\item Summary
-			\item Time Averaged Difference Images
-				\begin{enumerate}
-					\item Representative Data Set (Not interested in temporal behavior)
-					\item Stack Images to increase SNR.
-					\item Fill in Saturated Regions
-					\item Difference Images quickly reveal spectrally interesting features
-				\end{enumerate}
+			
 			
 			\item Cross Correlation
 				\begin{enumerate}
-					\item Cross Correlation Equations (Mean as a function of lag)
+					\item Cross Correlation Equations
 					\item Why Difference Images
 					\item Show Cross-Correlation Function
 				\end{enumerate}
@@ -102,62 +218,42 @@ Abstract last ...
 
 	
  		
- 	\subsection{Time Averaged Difference Images}	
- 	
- 	During its flight on February 8th, 2006 MOSES captured 27 images with exposure times ranging from one to thirty seconds. While MOSES did capture events with interesting temporal behavior \citep{Fox2010,Rust2017} our study aimed to quantify the total observed spectral content. Therefore we preformed our analysis on a time averaged version of the data.
- 	
- 	Longer exposures are best for observing quiet sun features but are saturated near active regions.  To fill in missing saturated regions and increase signal to noise we form a single time averaged image in all three spectral orders. Saturated pixels are masked with NaNs (Not a Number) and treated as missing data. Since MOSES observes through changing amounts of atmosphere throughout its flight we use the median of each image as a synthetic exposure time, rather than the amount of time the shutter is open.  %Actually you wouldn't want to ignore saturated pixels when taking the median.  All that matters is that those pixels are a high value and, unlike the mean, those values are irrelevant. Check and see how you did this.
- 	Masked data is then summed in time and divided by a total exposure time for each pixel to form a single time averaged image in each spectral order with no saturated pixels.  Figures \ref{fig:moses_super}a and \ref{fig:moses_super}b shows the m = 0 and 1 order time averaged images. 
- 	
- 	\begin{figure}
- 		\begin{center}
- 		\begin{tabular}{lll}
- 			\begin{minipage}{.29\columnwidth}
- 				\resizebox{1\columnwidth}{!}{\includegraphics{super_zero}}
- 				
- 			\end{minipage}&
- 			\begin{minipage}{.29\columnwidth}
- 				\resizebox{1\columnwidth}{!}{\includegraphics{super_plus}}
- 			 
- 			\end{minipage}&
- 			\begin{minipage}{.29\columnwidth}
- 				\resizebox{1\columnwidth}{!}{\includegraphics{super_pz}}
- 		
- 				
- 			\end{minipage}
- 		\end{tabular}
- 		\end{center}
- 		\caption{Figure of MOSES super exposures and a difference image}
- 		\label{fig:moses_super}
- 	
- 	\end{figure}
- 	
- 	 The difference between two spectral orders reveals several interesting features.  Figure \ref{fig:moses_super}c shows many small bipolar features throughout the quiet sun and a few large features in active regions and near the limb that are boxed in green.  The northern most green box has a large, coherent, negative feature dubbed the ``wishbone''.  The wishbone is very solar in appearance (possibly a partially filled active region loop), and has no obvious positive counterpart.  Close inspection reveals a white smear to its left that is likely a shifted wishbone in the plus order.  Unfortunately the positive portion of the wishbone is too blurry to quantify its shift by inspection.  In order to quantify subtle differences between orders we turn to cross-correlation.
- 	
+% 	\subsection{Time Averaged Difference Images}	
+ 
  	
  	\subsection{Cross-Correlation}
+ 	\label{sec:crosscorrelation}
  	
- 	 	
+ 	 \cck{I think this paragraph could be at the head of the subsection. I think it would also be appropriate to mention that we have \emph{tried} cross-correlating the orders. Perhaps it is worth showing the results and explaining what we can see in them, but why they are uninformative for the question of off-band emission. The He\,\textsc{ii} component dominates that cross-correlation so completely, and across such a wide range of scales, that the contributions of the minor players is obscured.} 
+ 	 
+ 	 \jdp{My intention is to demonstrate the side effects of cross-correlating individual orders in Figure \ref{fig:methods}.  This cartoon is still incomplete, but I believe if I add a simple He II background that the dominance of He II autocorrelation will be easy to see.  Let me know how you feel about the new arrangement of paragraphs.}	\cck{yes, I think this order is logical.}
+ 	 
  	 	\begin{figure}
  	 		\includegraphics[scale = 1]{methods_fig.pdf}
  	 		\caption{A graphical representation of our cross-correlation procedure}
  	 		\label{fig:methods}
  	 	\end{figure}
 	
- 	To help identify subtle pattern repetition in the MOSES difference images we cross-correlated them along the dispersion direction, or image rows.  The cross-correlation of two difference images is defined to be,
+ 	To help identify subtle pattern repetition in the MOSES difference images we cross-correlated them along the dispersion direction, or image rows.   Preforming a cross-correlation on the difference images requires justification.  An obvious first choice would have been to simply cross-correlate the m = 0 order with either outboard order.  Unfortunately the correlation function is dominated by the autocorrelation of the He {\sc ii} signal as seen in Figure \ref{fig:methods} \textbf{(LETTER)}.  This would also be the case when cross-correlating the m = 1 and m = -1 order images.  By taking the difference we remove stationary He {\sc ii} objects from the images and in turn their autocorrelation from the cross-correlation functions.  \jdp{I believe I can better illustrate these points with a tuned version of Figure \ref{fig:methods}} \cck{Yes, makes sense.}
+ 	
+ 	The cross-correlation of two difference images is defined to be,
 	 	\begin{equation}
 		 	PZ \otimes MZ = \mathcal{F}^{-1} \left\{\mathcal{F}\left(PZ \right)*\mathcal{F}\left(MZ \right)  \right\},
 		 	\label{eqn:cross_correlate}
 	 	\end{equation}
- 	where $PZ$ and $MZ$ are the m = 0 order subtracted from the m = 1 order and the m = 0 order subtracted from the m = -1 order respectively. $\mathcal{F}$ is the Fast Fourier Transform (FFT) operator.  The MOSES image rows were also Hanning windowed prior to applying the FFT to minimize edge effects.  The discrete Hanning window, $w(k)$, implemented was,
+        \cck{Might be simpler to just use $P-Z$ and $M-Z$; less to explain.}
+ 	where $PZ$ and $MZ$ are the m = 0 order subtracted from the m = 1 order and the m = 0 order subtracted from the m = -1 order respectively. $\mathcal{F}$ is the Fast Fourier Transform (FFT) operator.  The MOSES image rows were also Hanning windowed, and padded with zeros, prior to applying the FFT to minimize edge effects.  The discrete Hanning window, $w(l)$, implemented was,
  	
 		\begin{equation}
-			w(k) = \alpha - (1-\alpha)\mathrm{cos}\left( \frac{2\pi k}{N} \right) \ \mathrm{for} \ k = 0,1,...,N-1 \quad ,
+			w(l) = \alpha - (1-\alpha)\mathrm{cos}\left( \frac{2\pi l}{N} \right) \ \mathrm{for} \ l = 0,1,...,N-1 \quad ,
 			\label{eqn:Hanning}
 		\end{equation}
+
+
+
 	where $N$ is the number of elements in the array being windowed and $\alpha = .5$.
  	
- 	Preforming a cross-correlation on the difference images requires justification.  An obvious first choice would have been to simply cross-correlate the m = 0 order with either outboard order.  Unfortunately the correlation function is dominated by the autocorrelation of the He {\sc ii} signal as seen in Figure \ref{fig:methods}(put a letter here).  This would also be the case when cross-correlating the m = 1 and m = -1 order images.  By taking the difference we remove stationary He {\sc ii} objects from the images and in turn their autocorrelation from the cross-correlation functions.
+ 	
  	
 			 	
 		\begin{figure}
@@ -169,14 +265,23 @@ Abstract last ...
  	
 	 This procedure yields a one dimensional cross-correlation function for each row of the MOSES difference images.  Since we are concerned mostly with bulk spectral content we then take the mean of all 1024 cross-correlation functions, one for each row, to get our final correlation curve plotted in blue in Figure \ref{fig:sigtest}. 
 	 
-	 The cross-correlation curve or the MOSES difference images has a few notable features.  There are several noticeable peaks in correlation  at approximately $-800$, 250, and 600 pixel lags.  The largest peak in correlation, centered about zero lag, also displays a double peak, not typical of auto-correlation functions that generally have  maxima at zero lag for uncorrelated functions.  While these features are identifiable, the curve is complicated enough that quantifying peaks in correlation visually is difficult and the significance of any given peak is questionable. We therefore move to test the null hypothesis that none of these features are statistically significant by cross-correlating random data generated to match the MOSES image rows.
+	 The cross-correlation curve or the MOSES difference images has a few notable features.  There are noticeable peaks in correlation  at approximately $-800$, 250, and $+600$ pixel lags.  The largest peak in correlation, centered about zero lag, also displays a double peak, not typical of cross-correlation functions that generally have  maxima at zero lag for uncorrelated functions. \cck{Autocorrelations have unity peaks at zero lag; but what should be our expectations of a cross-correlation?} \jdp{Error on my part.  Cross correlations (and auto-correlations) of uncorrelated functions tend to have maxima at zero lag when using a fixed mean subtraction.} \cck{Hm. That still does not sound correct.}  While these features are identifiable, the curve is complicated enough that quantifying peaks in correlation visually is difficult and the significance of any given peak is questionable. We therefore move to test the null hypothesis that none of these features are statistically significant by cross-correlating random data generated to match the MOSES image rows.
  
 	
 	\subsection{Significance Testing}
 	\label{sec:sigtesting}
-	The mean cross-correlation function of the two MOSES difference images, $PZ$ and $MZ$, has several peaks at nonzero lags.  We propose that these peaks in cross-correlation are due to shifted solar features in the MOSES outboard orders and are therefore significant in identifying extra spectral content.  To test this hypothesis we cross correlated randomly generated synthetic solar data that matched MOSES image rows in length and had similar power spectral and autocorrelation distributions.  Our test data set was generated from the MOSES image columns because they contain the same solar features as the image rows, but contain practically no spectral dispersion.  By interpolating and shuffling the elements of the MOSES columns in Fourier space we can generate a large number of test arrays for significance testing.
+	 \cck{Try to explain this hypothesis a bit more clearly. Describe step by step how spectral lines different from the dominant He\,\textsc{ii} line could give rise to such peaks.} 
+	 \jdp{I agree that I need to illustrate this somewhere,  maybe its better to explain this is Section \ref{sec:crosscorrelation}?  I am struggling to fit it here because it has nothing to do with significance testing.} \cck{Agreed. Top of 3.2 perhaps?}
+	 
+	 \cck{Slow down a bit. We cannot test the hypothesis directly. We instead seek to exclude a null hypothesis, that the peaks in our difference image cross-correlations are due to a happenstance combination of solar features in He\,\textsc{ii} rather than features shifted by dispersion. We believe this to be the most likely alternative to our proposed hypothesis. To test the null hypothesis, we need a dataset that represents the null hypothesis. The null hypothesis dataset needs to be large enough, and have enough random variations, to gather statistics that represent what is possible under the null hypothesis...}
+	 
+	 \jdp{Correct, my languge was imprecise.  I will make this more clear.}
 	
-	MOSES images contain 2048 columns.  These columns have the same spatial features as MOSES image rows but with none of the spectral information.  Despite this the MOSES image columns are insufficient for significance testing in a couple ways.  First, there is an insufficient sample size.  With features in the MOSES images ranging from four to about a hundred pixels we have at most 512 unique columns for significance testing.  Second, they are half as long as the rows preventing us from measuring significance past 1024 pixel lag.  Therefore we needed to generate a synthetic data set for significance testing.
+	The mean cross-correlation function of the two MOSES difference images, blue in Figure \ref{fig:sigtest}, has several peaks at nonzero lags.  
+	
+	To reject the null hypothesis we cross correlated randomly generated synthetic solar data that matched MOSES image rows in length and had similar power spectral and autocorrelation distributions.  Our test data set was generated from the MOSES image columns because they contain the same solar features as the image rows, but contain practically no spectral dispersion.  By interpolating and shuffling the elements of the MOSES columns in Fourier space we can generate a large number of test arrays for significance testing.
+	
+	MOSES images contain 2048 columns.  These columns have the same spatial features as MOSES image rows but with none of the spectral information.  Despite this the MOSES image columns are insufficient for significance testing in a couple ways.  First, there is an insufficient sample size.  With features in the MOSES images ranging from four to about a hundred pixels we have at most 512 unique columns for significance testing.  Second, they are half as long as the rows, preventing us from measuring the significance of correlation past 1024 pixel lag.  Therefore we needed to generate a synthetic data set for significance testing.
 	
 	Using the MOSES image columns as our basis we generated $N$ random arrays that are 2048 long and match MOSES columns in both power spectral and autocorrelation distribution.  First the columns in each image, $P(x,y)$, $Z(x,y)$, and $M(x,y)$, are windowed with a Hanning window, $w(y)$(Equation \ref{eqn:Hanning}), and Fourier transformed along the column dimension, $y$.  The windowed Fourier transformed array is defined to be
 	
@@ -184,9 +289,10 @@ Abstract last ...
 		\widetilde{Z}_w[x,k] = \mathcal{F}_y\left[ w(y)Z[x,y]\right], 
 		\label{eqn:ztwiddle}
 	\end{equation}
+   
 	where, $ x = 0,1,...,2047$ and $y = 0,1,...,1023$.  In Equation \ref{eqn:ztwiddle} and the following equations we will show the procedure used to generate random arrays for only the zero order, $Z(x,y)$, for simplicity even though an identical procedure was carried out on every order.
 	
-	The transformation outlined in Equation \ref{eqn:ztwiddle} gives us 511 spatial frequency bins and one DC bin that each have 1024 elements, one for each column, for each order.  Each new array, $\widetilde{Z}^{'}$, is formed by picking an element randomly from each frequency bin. To further scramble the array each value of $k$, aside from the DC term, is given a random phase shift, $e^{i\phi}$.  By this method the $k^{\mathrm{th}}$ element in each new synthetic array, $\widetilde{Z}_k^{'}$, is found as follows:
+	The transformation outlined in Equation \ref{eqn:ztwiddle} gives us 511 spatial frequency bins and one DC bin that each have 1024 elements, one for each column, for each order.  Each new array, $\widetilde{Z}'$, is formed by picking an element randomly from each frequency bin \cck{I know what you mean, but I don't think it is clear. Slow down. From the set of all the Fourier transformed data columns, we will generate a synthetic \emph{row}, $Z'(x)$ by populating its Fourier transform, $\widetilde{Z}'$. }. To further scramble the array each value of $k$, aside from the DC term, is given a random phase shift, $e^{i\phi}$.  By this method the $k^{\mathrm{th}}$ element in each new synthetic array, $\widetilde{Z}_k'$, is found as follows:
 	
 	\begin{equation}
 		\widetilde{Z}_k^{'} = \widetilde{Z}_w\left[\sigma(m,2048), k  \right]e^{i\Phi(n)} ,
@@ -210,9 +316,9 @@ Abstract last ...
 	where $j = 1,2,..,1022.$ Since our data is purely real we can fill in the remaining Fourier components,  negative frequencies, with the complex conjugate of the corresponding positive frequency component.  The final synthetic MOSES row is found through a FFT, 
 	
 	\begin{equation}
-		Z^{'} = \mathcal{F}_y^{-1}[\widetilde{Z}^{'}].
+		Z' = \mathcal{F}_y^{-1}[\widetilde{Z}'].
 	\end{equation}
-
+	
 	To verify that our N synthetic arrays match the MOSES columns we take a 1024 element long section of each synthetic array, as well as the MOSES columns, and plot portions the power spectral and autocorrelation distributions. Figures \ref{fig:sigtestpower} and \ref{fig:sigtestauto}  show three percentiles of the distribution (10th, 50th, and 90th) for both power spectra and autocorrelation for N equal to 10,000 synthetic arrays. Figure \ref{fig:sigtestpower} shows great agreement between synthetic data and the MOSES columns in power spectral distribution.  Figure \ref{fig:sigtestauto} show good agreement between the synthetic data and MOSES columns at the median and only marginal agreement in the wings of the distribution.  Despite that the synthetic data always has a high autocorrelation length that the MOSES columns and therefore acts as a worse case scenario during significance testing.  
 		
 	\begin{figure}
@@ -228,17 +334,17 @@ Abstract last ...
 		\label{fig:sigtestauto}
 	\end{figure}
 	
-	Figure \ref{fig:sigtest} shows the results of our significance testing with 10,000 synthetic arrays.  Each set of three arrays, $Z^{'}$, $M^{'}$ and $P^{'}$, are subtracted and correlated according to Equation \ref{eqn:cross_correlate}. We find that the mean cross-correlation of MOSES difference images along their rows has peaks that are much greater than the 99.99\% confidence interval and are therefore significant and indicative of extra spectral content.
+	Figure \ref{fig:sigtest} shows the results of our significance testing with 10,000 synthetic arrays.  Each set of three arrays, $Z'$, $M'$ and $P'$, are subtracted and correlated according to Equation \ref{eqn:cross_correlate}. \cck{I think you left something out. Don't you actually generate $Z'$, $M'$ and $P'$ in parallel, choosing the same $x$-index for each $k$ in all 3 arrays? Otherwise you'd have a different synthetic sun in each array, so the analogy to the MOSES data would not be so good.} \jdp{Correct, I attempted to state this at the start of the methods section but will make this more clear.} We find that the mean cross-correlation of MOSES difference images along their rows has peaks that are much greater than the 99.99\% confidence interval and are therefore significant and indicative of extra spectral content. \cck{It may be worth discussing the properties of the synthetic rows in more detail. Not all of the following are necessarily important; somewhat in brainstorming mode here. Are the synthetic data positive definite? Does it matter (probably not)? Do the rows show similar power spectra? How might the synthetic data may differ from the real thing, in ways other than the spectral lines we are looking for? For example, there are also line profile and PSF effects. This could change the structure near zero lag, but the effective range of these features is probably small (how many pixels?). } 
 	
+    \cck{Are we comparing difference cc lags for one synthetic column to an average of difference cc lags for 1024 rows? What is the implication of that?} \jdp{The idea of Figures 7 and 8 is to show that a 1024 section of the randomly generated data matches certain characteristics of an actual MOSES column.  These plots show that the synthetic date matches the distribution of MOSES columns, not just the average.} \cck{Nice. Just need some discussion to go with.}
 	
 	
 	
 	
 	\subsection{Forward Model} 
-	The mean cross-correlation of MOSES difference image rows is shown in Figure \ref{fig:sigtest}.  In Section \ref{sec:sigtesting} several peaks in correlation were deemed to be significant and indicative of extra spectral content in the MOSES images.  These peaks have irregular, broad profiles and are both positive and negative.  To interpret how these peaks in correlation relate to spectral content we developed a forward model that produces synthetic MOSES difference images with known spectral content using Chianti \citep{} and images from EIT \citep{}.  
+	The mean cross-correlation of MOSES difference image rows is shown in Figure \ref{fig:sigtest}.  In Section \ref{sec:sigtesting} several peaks in correlation were deemed to be significant and indicative of extra spectral content in the MOSES  data.  These peaks have irregular, broad profiles and are both positive and negative.  To interpret how these peaks in correlation relate to spectral content we developed a forward model that produces synthetic MOSES difference images with known spectral content using Chianti \citep{} and images from EIT \citep{}.  
 	
-	During the 2008 MOSES rocket flight EIT captured 4 full disk EUV images, one in each of the 171 {\AA}, 195 {\AA}, 284 {\AA}, and 304 {\AA} channels.  Each image was co-aligned, cropped, and rebinned 
-	
+
 	\subsection{Fitting}
 	Using a MCMC to thoroughly explore the parameter space and generate error bars on fit parameters. More work to be done here.
 
@@ -249,6 +355,12 @@ Abstract last ...
 	Implications for future, design changes incorporated in ESIS (field stop, line selection, dispersion increase?). Possibly examine the spectra surrounding Ne VII 465 \AA.  Do we have the MOSES II throughput curves? 
 	
 \bibliography{ParkerKankelborg2018}
+
+\section{Acronyms}
+	\begin{acronym}
+		\acro{MOSES}{Multi-Order Solar EUV Spectrograph}
+		\acro{EIT}{EUV Imaging Telescope}
+	\end{acronym}
 
 
 \end{article}

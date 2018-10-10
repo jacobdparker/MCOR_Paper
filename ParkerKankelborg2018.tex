@@ -294,15 +294,14 @@
 		\label{fig:sigtestauto}
 	\end{figure}
 	
-	Figure \ref{fig:sigtest} shows the results of our significance testing with 10,000 synthetic arrays.  Each set of three arrays, $Z'$, $M'$ and $P'$, are subtracted and correlated according to Equation \ref{eqn:cross_correlate}. The 99.99\% confidence interval is found by removing a percentage, $p$, from either end of the distribution for each lag. Here n is the number of degrees of freedom in the system or number of independent MOSES rows being cross-correlated.  By picking a confidence level and a representative n we determine what percentage of data, p, is outside the confidence interval.
+	Figure \ref{fig:sigtest} shows the results of our significance testing with 10,000 synthetic arrays.  Each set of three arrays, $Z'$, $M'$ and $P'$, are subtracted and correlated according to Equation \ref{eqn:cross_correlate}. The 99.99\% confidence interval is found by removing a percentage, $p$, from either end of the distribution for each lag and is found through the following equation:
 	
 	\begin{equation}
 	.9999 = 1-(2p)^n.
 	\end{equation}
+	Here n is the number of degrees of freedom in the system or number of independent MOSES rows being cross-correlated.  By picking a confidence level and a representative n we determine what percentage of data, p, is outside the confidence interval.  A good indication of the value of n is the autocorrelation length (the lag at which autocorrelation falls to zero and begins random oscillation) of the MOSES columns.  Figure \ref{fig:sigtestauto} shows that the correlation length is any where from 50 to 150 pixels. This implies that there are anywhere from 7-20 unique MOSES rows.  The significance curves in Figure 5 were plotted using a conservative n=5. 
 	
-	A good indication of the value of n is the autocorrelation length (the lag at which autocorrelation falls to zero and begins random oscillation) of MOSES columns.  Figure \ref{fig:sigtestauto} shows that the correlation length is any where from 50 to 150 pixels. This implies that there are anywhere from 7-20 unique MOSES rows.  The significance curves in Figure 5 were plotted using a conservative n=5. 
-	
-	 We find that the mean cross-correlation of MOSES difference images along their rows has peaks that are much greater than the 99.99\% confidence interval and are therefore significant and indicative of extra spectral content. 
+	We find that the mean cross-correlation of MOSES difference images along their rows has peaks that are much greater than the 99.99\% confidence interval and are therefore significant and indicative of extra spectral content. 
 	
 	\cck{It may be worth discussing the properties of the synthetic rows in more detail. Not all of the following are necessarily important; somewhat in brainstorming mode here. Are the synthetic data positive definite? Does it matter (probably not)? Do the rows show similar power spectra? How might the synthetic data may differ from the real thing, in ways other than the spectral lines we are looking for? For example, there are also line profile and PSF effects. This could change the structure near zero lag, but the effective range of these features is probably small (how many pixels?). } 
 	
